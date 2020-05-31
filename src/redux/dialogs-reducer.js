@@ -1,79 +1,13 @@
-const SET_DIALOGS = 'SET_DIALOGS';
+import {dialogsAPI} from "../api/api";
+
+const SET_DIALOGS = 'dialogs/SET_DIALOGS';
+const SET_MESSAGES = 'dialogs/SET_MESSAGES';
+const SET_CURRENT_DIALOG = 'dialogs/SET_CURRENT_DIALOG';
 
 let initialState = {
-    dialogs: [
-        {
-            "id": 6592,
-            "userName": "Анатолий Смирнов",
-            "lastMessageDate": "19 марта",
-            "avatar": "https://sun9-61.userapi.com/c850620/v850620874/15465f/C90iaSdwuK4.jpg?ava=1"
-        },
-        {
-            "id": 6666,
-            "userName": "Василий Смирнов",
-            "lastMessageDate": "18 марта",
-            "avatar": "https://sun9-61.userapi.com/c850620/v850620874/15465f/C90iaSdwuK4.jpg?ava=1"
-        }
-    ],
-    messages: [
-        {
-            "id": "8e0eb1bf-0861-439c-ab3c-a2d3397cb77d",
-            "text": "ауkjsvlksdjhvlk knv dnlkv dkjnvlkdbnvkjdbvlkdbvkjbdflv",
-            "addedAt": "19 марта",
-            "senderId": 1779,
-            "dialogId": 6592
-        },
-        {
-            "id": "31967f1c-b209-4538-9509-bd2b5fe426f3",
-            "text": "?",
-            "addedAt": "23 марта",
-            "senderId": 1779,
-            "dialogId": 6592
-        },{
-            "id": "31967f1c-b209-4538-9509-bd2b5fe426f3",
-            "text": "?",
-            "addedAt": "23 марта",
-            "senderId": 1779,
-            "dialogId": 6592
-        },{
-            "id": "31967f1c-b209-4538-9509-bd2b5fe426f3",
-            "text": "?",
-            "addedAt": "23 марта",
-            "senderId": 1779,
-            "dialogId": 6592
-        },{
-            "id": "31967f1c-b209-4538-9509-bd2b5fe426f3",
-            "text": "?",
-            "addedAt": "23 марта",
-            "senderId": 1779,
-            "dialogId": 6592
-        },{
-            "id": "31967f1c-b209-4538-9509-bd2b5fe426f3",
-            "text": "?",
-            "addedAt": "23 марта",
-            "senderId": 1779,
-            "dialogId": 6592
-        },{
-            "id": "31967f1c-b209-4538-9509-bd2b5fe426f3",
-            "text": "?",
-            "addedAt": "23 марта",
-            "senderId": 1779,
-            "dialogId": 6592
-        },{
-            "id": "31967f1c-b209-4538-9509-bd2b5fe426f3",
-            "text": "?",
-            "addedAt": "23 марта",
-            "senderId": 1779,
-            "dialogId": 6592
-        },{
-            "id": "31967f1c-b209-4538-9509-bd2b5fe426f3",
-            "text": "?",
-            "addedAt": "23 марта",
-            "senderId": 1779,
-            "dialogId": 6592
-        },
-    ],
-    idAuth: 1779,
+    dialogs: [],
+    messages: [],
+    idAuth: 'e715df23-ecb8-47ad-8ad5-dd4c3c7d7f1j',
     currentDialog: null
 
 };
@@ -83,6 +17,17 @@ const dialogsReducer = (state = initialState, action) => {
         case  SET_DIALOGS:
             return {
                 ...state,
+                dialogs: action.payload
+            };
+        case  SET_MESSAGES:
+            return {
+                ...state,
+                messages: action.payload
+            };
+        case  SET_CURRENT_DIALOG:
+            return {
+                ...state,
+                currentDialog: action.payload
             };
         default:
             return state;
@@ -90,3 +35,41 @@ const dialogsReducer = (state = initialState, action) => {
 };
 
 export default dialogsReducer;
+
+const setDialogs = (dialogs) => {
+    return {
+        type: SET_DIALOGS,
+        payload: dialogs
+    };
+};
+
+const setMessages = (messages) => {
+    return {
+        type: SET_MESSAGES,
+        payload: messages
+    };
+};
+
+const setCurrentDialog = (id) => {
+    return {
+        type: SET_CURRENT_DIALOG,
+        payload: id
+    };
+};
+
+export const getDialogsAC = () => {
+    return (dispatch) => {
+        dialogsAPI.getDialogs().then(data => {
+            dispatch(setDialogs(data.data))
+        })
+    }
+};
+
+export const getMessagesAC = (dialogId) => {
+    return (dispatch) => {
+        dispatch(setCurrentDialog(dialogId));
+        dialogsAPI.getMessages(dialogId).then(data => {
+            dispatch(setMessages(data.data))
+        })
+    }
+};

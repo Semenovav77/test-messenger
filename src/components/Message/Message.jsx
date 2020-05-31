@@ -1,10 +1,11 @@
 import React from 'react';
+import classNames from 'classnames';
 
-import './Message.scss'
+import './Message.scss';
 
-const Message = ({message}) => {
+const Message = ({message, idAuth}) => {
     return (
-        <div className='message'>
+        <div className={classNames('message', {'message--isme': (message.senderId === idAuth)})}>
             <div className='message__bubble'>
                 <div className='text'>
                     {message.text && message.text}
