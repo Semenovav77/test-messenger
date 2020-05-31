@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './App.scss';
-import {Messages} from './components';
+import {MessagesContainer} from './containers';
 import {DialogsContainer} from './containers';
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
             <DialogsContainer/>
         </div>
         <div className='chat__messages'>
-            <Messages/>
+            <MessagesContainer/>
         </div>
         </div>
     </>

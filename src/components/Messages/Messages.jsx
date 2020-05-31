@@ -1,13 +1,16 @@
 import React from 'react';
 
 import './Messages.scss';
+import {Message} from "./../../components";
 
-const Messages = () => {
+const Messages = ({messages}) => {
+    debugger
     return (
         <div className='messages'>
             <div className='messages__header'>
             </div>
             <div className='messages__current-dialog'>
+                {messages.map((message) => <Message key={message.id} message={message}/>)}
             </div>
             <div className='messages__input'>
                 <input type='text'/>
