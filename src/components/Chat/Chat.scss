@@ -1,0 +1,11 @@
+.chat {
+  display: flex;
+  height: 100%;
+  min-width: 768px;
+  &__dialogs {
+    width: 30%;
+  }
+  &__messages {
+    width: 70%;
+  }
+}

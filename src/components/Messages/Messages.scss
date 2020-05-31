@@ -1,0 +1,16 @@
+.messages{
+  height: 100%;
+  &__header {
+    height: 59px;
+    background: #EDEDED;
+    border-top: 1px solid #282c3417;
+    border-bottom: 1px solid #282c3417;
+  }
+  &__current-dialog{
+    height: calc(100% - 112px);
+  }
+  &__input{
+    height: 49px;
+  }
+}
+

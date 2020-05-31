@@ -1,0 +1,17 @@
+.dialogs{
+  height: 100%;
+  &__header {
+    height: 59px;
+    background: #EDEDED;
+    border: 1px solid #282c3417;
+  }
+  &__search{
+    height: 49px;
+    border-right: 1px solid #282c3417;
+  }
+  &__list{
+    border: 1px solid #282c3417;
+    height: calc(100% - 112px);
+  }
+}
+
