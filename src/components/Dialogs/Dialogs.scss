@@ -10,6 +10,8 @@
     border-right: 1px solid #282c3417;
   }
   &__list{
+    display: flex;
+    flex-direction: column;
     border: 1px solid #282c3417;
     height: calc(100% - 112px);
   }
