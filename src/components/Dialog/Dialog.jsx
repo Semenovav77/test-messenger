@@ -11,11 +11,11 @@ const Dialog = ({dialog, currentDialog, getMessagesAC}) => {
             </div>
             <div className='item__info'>
                 <div className='item__info-top'>
-                    <div><b>{dialog.userName}</b></div>
-                    <div><span> {dialog.lastMessageDate}</span></div>
+                    <div className='name'><b>{dialog.userName}</b></div>
+                    <div className='time'><span> {dialog.lastMessageDate}</span></div>
                 </div>
                 <div className='item__info-bottom'>
-                    Последнее сообщение
+                    <span>Здесь будет последнее сообщение</span>
                 </div>
             </div>
         </div>

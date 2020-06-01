@@ -1,7 +1,11 @@
 .item {
   display: flex;
   align-items: center;
-  padding: 15px 20px 15px 20px;
+  padding: 8px 20px 8px 20px;
+  cursor:pointer;
+  &:hover {
+    background: #EDEDED;
+  }
   &__left {
     img {
       width: 50px;
@@ -14,9 +18,23 @@
     flex-direction: column;
     flex: 1;
     margin-left: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     &-top {
       display: flex;
-      justify-content: space-between;
+      .name {
+        flex: 1;
+        min-width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    &-bottom {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }
@@ -24,3 +42,4 @@
 .item--iscurrent {
   background: #EDEDED;
 }
+

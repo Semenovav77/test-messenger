@@ -73,3 +73,11 @@ export const getMessagesAC = (dialogId) => {
         })
     }
 };
+
+export const addMessagesAC = (text, senderId, dialogId) => {
+    return (dispatch) => {
+        dialogsAPI.addMessage(text, senderId, dialogId).then(data => {
+            dispatch(getMessagesAC(dialogId))
+        })
+    }
+};

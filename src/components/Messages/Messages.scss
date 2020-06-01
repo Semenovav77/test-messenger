@@ -8,13 +8,41 @@
   }
   &__current-dialog{
     height: calc(100% - 112px);
-    background: url(https://web.whatsapp.com/img/bg-chat-tile_9e8a2898faedb7db9bf5638405cf81ae.png);
+    background: url('./../../assets/bg-chat.png');
     background-color: #e5ddd5;
     padding: 0 50px 0 50px;
     overflow: auto;
   }
   &__input{
-    height: 49px;
+    min-height: 49px;
+    display: flex;
+    align-items: center;
+    background: #f0f0f0;
+    .input-add {
+      flex: 1;
+      padding: 8px 18px;
+      min-height: 20px;
+      font-size: 14px;
+      border-radius: 22px;
+      background: white;
+      max-height: 100px;
+      overflow: auto;
+      margin: 7px 0 7px 0;
+    }
+    .input-placeholder {
+      position: absolute;
+      top: calc(100%- 20px);
+      color: grey;
+      margin: 0 6px;
+      pointer-events: none;
+      margin-left: 67px;
+    }
+    .left-icon {
+      margin: 0 10px 0 10px;
+    }
+    .right-icon {
+      margin: 0 10px 0 10px;
+    }
   }
 }
 
