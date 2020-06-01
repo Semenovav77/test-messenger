@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 
 import './Messages.scss';
-import {Dialog, Message} from "./../../components";
-import {Input} from './../../components'
+import {Message} from "./../../components";
+import {Input} from './../../components';
+import {HeaderCurrentContact} from './../../components';
 
-const Messages = ({messages, idAuth, currentDialog, addMessagesAC}) => {
+const Messages = ({messages, dialogs, idAuth, currentDialog, addMessagesAC}) => {
     const [value, setValue] = useState('');
     const onChangeInput = (e) => {
         setValue(e.target.innerText);
@@ -12,6 +13,7 @@ const Messages = ({messages, idAuth, currentDialog, addMessagesAC}) => {
     return (
         <div className='messages'>
             <div className='messages__header'>
+                {dialogs.map(dialog => (dialog.id === currentDialog) && <HeaderCurrentContact key={dialog.id} dialog={dialog}/>)}
             </div>
             <div className='messages__current-dialog'>
                 {messages.map((message) => <Message key={message.id}

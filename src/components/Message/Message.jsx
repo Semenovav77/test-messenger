@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import './Message.scss';
+import {format} from "date-fns";
 
 const Message = ({message, idAuth}) => {
     return (
@@ -12,7 +13,8 @@ const Message = ({message, idAuth}) => {
                 </div>
                 <div className='date'>
                     <span>
-                        {message.addedAt}
+                        {format(Date.parse(message.addedAt), 'HH:mm dd.MM.yyyy')}
+                      {/*  {message.addedAt}*/}
                     </span>
                 </div>
             </div>

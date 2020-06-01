@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import './Dialog.scss';
+import { format } from 'date-fns';
 
 const Dialog = ({dialog, currentDialog, getMessagesAC}) => {
     return (
@@ -11,8 +12,8 @@ const Dialog = ({dialog, currentDialog, getMessagesAC}) => {
             </div>
             <div className='item__info'>
                 <div className='item__info-top'>
-                    <div className='name'><b>{dialog.userName}</b></div>
-                    <div className='time'><span> {dialog.lastMessageDate}</span></div>
+                    <div className='name'>{dialog.userName}</div>
+                    <div className='time'><span> {format(Date.parse(dialog.lastMessageDate), 'dd.MM.yyyy')}</span></div>
                 </div>
                 <div className='item__info-bottom'>
                     <span>Здесь будет последнее сообщение</span>

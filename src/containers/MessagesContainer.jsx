@@ -7,7 +7,8 @@ import {addMessagesAC} from '../redux/dialogs-reducer';
 const mapStateToProps = (state) => ({
     messages: state.dialogsPage.messages,
     idAuth: state.dialogsPage.idAuth,
-    currentDialog: state.dialogsPage.currentDialog
+    currentDialog: state.dialogsPage.currentDialog,
+    dialogs: state.dialogsPage.dialogs,
 });
 
 export default connect(mapStateToProps, {addMessagesAC})(Messages);
