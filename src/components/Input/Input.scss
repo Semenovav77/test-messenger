@@ -1,19 +1,6 @@
-.messages{
+.messages-search{
   height: 100%;
-  &__header {
-    height: 59px;
-    background: #EDEDED;
-    border-top: 1px solid #282c3417;
-    border-bottom: 1px solid #282c3417;
-  }
-  &__current-dialog{
-    height: calc(100% - 112px);
-    background: url('./../../assets/bg-chat.png');
-    background-color: #e5ddd5;
-    padding: 0 50px 0 50px;
-    overflow: auto;
-  }
- /* &__input{
+  &__input{
     min-height: 49px;
     display: flex;
     align-items: center;
@@ -36,6 +23,7 @@
       margin: 0 6px;
       pointer-events: none;
       margin-left: 77px;
+      white-space: nowrap;
     }
     .left-icon {
       margin: 0 10px 0 10px;
@@ -47,6 +35,13 @@
       position: absolute;
       left: 35px;
     }
-  }*/
+    .search {
+      padding: 8px 0px 8px 68px;
+      white-space: nowrap;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      max-height: 20px;
+    }
+  }
 }
 
