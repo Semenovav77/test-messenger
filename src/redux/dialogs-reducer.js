@@ -1,4 +1,5 @@
 import {dialogsAPI} from "../api/api";
+import {openNotification} from "../helpers/notifications";
 
 const SET_DIALOGS = 'dialogs/SET_DIALOGS';
 const SET_MESSAGES = 'dialogs/SET_MESSAGES';
@@ -62,6 +63,13 @@ export const getDialogsAC = () => {
         dialogsAPI.getDialogs().then(data => {
             dispatch(setDialogs(data.data))
         })
+            .catch(err => {
+                openNotification({
+                    title: 'Ошибка!',
+                    text: err.message,
+                    type: 'error',
+                });
+            })
     }
 };
 
@@ -71,6 +79,13 @@ export const getMessagesAC = (dialogId) => {
         dialogsAPI.getMessages(dialogId).then(data => {
             dispatch(setMessages(data.data))
         })
+            .catch(err => {
+                openNotification({
+                    title: 'Ошибка!',
+                    text: err.message,
+                    type: 'error',
+                });
+            })
     }
 };
 
@@ -79,5 +94,45 @@ export const addMessagesAC = (text, senderId, dialogId) => {
         dialogsAPI.addMessage(text, senderId, dialogId).then(data => {
             dispatch(getMessagesAC(dialogId))
         })
+            .catch(err => {
+                openNotification({
+                    title: 'Ошибка!',
+                    text: err.message,
+                    type: 'error',
+                });
+            })
+    }
+};
+
+export const delDialogAC = (id) => {
+    return (dispatch) => {
+        dialogsAPI.delDialog(id)
+            .then(data => {
+                dispatch(getDialogsAC())
+                dispatch(setMessages([]))
+        })
+            .catch(err => {
+                openNotification({
+                    title: 'Ошибка!',
+                    text: err.message,
+                    type: 'error',
+                });
+            })
+    }
+};
+
+export const delMessageAC = (id, dialogId) => {
+    return (dispatch) => {
+        dialogsAPI.delMessage(id)
+            .then(data => {
+                dispatch(getMessagesAC(dialogId))
+        })
+            .catch(err => {
+                openNotification({
+                    title: 'Ошибка!',
+                    text: err.message,
+                    type: 'error',
+                });
+            })
     }
 };

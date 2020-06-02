@@ -5,20 +5,28 @@ import {Message} from "./../../components";
 import {Input} from './../../components';
 import {HeaderCurrentContact} from './../../components';
 
-const Messages = ({messages, dialogs, idAuth, currentDialog, addMessagesAC}) => {
+const Messages = ({messages, dialogs, idAuth, currentDialog, addMessagesAC, delDialogAC, delMessageAC}) => {
     const [value, setValue] = useState('');
     const onChangeInput = (e) => {
-        setValue(e.target.innerText);
+        let target = e.target.innerText;
+        if (target === '\n') {target = ''}
+        setValue(target);
     };
+
     return (
         <div className='messages'>
             <div className='messages__header'>
-                {dialogs.map(dialog => (dialog.id === currentDialog) && <HeaderCurrentContact key={dialog.id} dialog={dialog}/>)}
+                {dialogs.map(dialog => (dialog.id === currentDialog) && <HeaderCurrentContact key={dialog.id}
+                                                                                              dialog={dialog}
+                                                                                              delDialogAC={delDialogAC}
+                                                                                              />)}
             </div>
             <div className='messages__current-dialog'>
                 {messages.map((message) => <Message key={message.id}
                                                     message={message}
-                                                    idAuth={idAuth}/>)}
+                                                    idAuth={idAuth}
+                                                    currentDialog={currentDialog}
+                                                    delMessageAC={delMessageAC}/>)}
             </div>
                 <Input idAuth={idAuth}
                        currentDialog={currentDialog}

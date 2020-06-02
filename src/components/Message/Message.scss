@@ -11,24 +11,46 @@
     border-radius: 0px 10px 10px 10px;
     padding: 15px 7px 3px 7px;
     margin-bottom: 8px;
-
+    position: relative;
     .date {
       display: flex;
       justify-content: flex-end;
       font-size: 10px;
       opacity: 0.5;
     }
+    .message-btn {
+      display: none;
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      cursor: pointer;
+      button {
+        border-radius: 10px;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+      }
+    }
+  }
+  &__bubble:hover {
+    .message-btn {
+      display: block;
+    }
   }
 
   &--isme {
     display: flex;
     flex-direction: row-reverse;
-
     #{$self}__bubble {
       background: #dcf8c6;
       border-radius: 10px 0px 10px 10px;
     }
 
+  }
+}
+.focus {
+  .message-btn {
+    display: block;
   }
 }
 

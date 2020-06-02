@@ -37,7 +37,7 @@ const Input = ({idAuth, currentDialog, addMessagesAC, placeholder, message = fal
                  ref={cellRef}
                  onKeyPress={sendMessageOnKey}>
             </div>
-            {!value &&
+            {(value === '' || value ==='\n') &&
             <div className='input-placeholder'>
                 {placeholder}
             </div>}

@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Messages} from './../components';
 import {connect} from 'react-redux';
-import {addMessagesAC} from '../redux/dialogs-reducer';
+import {addMessagesAC, delDialogAC, delMessageAC} from '../redux/dialogs-reducer';
 
 const mapStateToProps = (state) => ({
     messages: state.dialogsPage.messages,
@@ -11,5 +11,5 @@ const mapStateToProps = (state) => ({
     dialogs: state.dialogsPage.dialogs,
 });
 
-export default connect(mapStateToProps, {addMessagesAC})(Messages);
+export default connect(mapStateToProps, {addMessagesAC, delDialogAC, delMessageAC})(Messages);
 

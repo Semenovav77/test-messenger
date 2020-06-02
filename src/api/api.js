@@ -22,4 +22,10 @@ export const dialogsAPI = {
                 dialogId: dialogId
             })
     },
+    delDialog(id) {
+        return instance.delete(`/dialogs/${id}`)
+    },
+    delMessage(id) {
+        return instance.delete(`/messages/${id}`)
+    }
 };

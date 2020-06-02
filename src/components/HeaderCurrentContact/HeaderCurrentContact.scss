@@ -5,6 +5,25 @@
     border-radius: 20px;
   }
 }
+
 .center-panel {
+  flex: 1;
   margin-left: 15px;
+  font-weight: 600;
 }
+
+.right-panel {
+  cursor: pointer;
+}
+.ant-popover-inner-content {
+  padding: 12px 0;
+  .item-popover {
+    cursor: pointer;
+    padding: 0 10px;
+    &:hover {
+      background: #ededed85;;
+    }
+  ;
+  }
+}
+

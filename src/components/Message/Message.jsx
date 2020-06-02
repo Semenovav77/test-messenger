@@ -1,22 +1,62 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import classNames from 'classnames';
 
 import './Message.scss';
 import {format} from "date-fns";
+import {EllipsisOutlined} from '@ant-design/icons'
+import {Popover} from "antd";
 
-const Message = ({message, idAuth}) => {
+const Message = ({message, idAuth, currentDialog, delMessageAC}) => {
+
+    const [visible, setVisible] = useState(false);
+    const toogleVisible = () => {
+        setVisible(true);
+    };
+    const onDelMessage = () => {
+        delMessageAC(message.id, currentDialog)
+    };
+    let timer;
+    const handleClick = (element, e) => {
+        if (element && !element.contains(e.target)) {
+           timer = setTimeout(() => setVisible(false), 150)
+        }
+    };
+
+    useEffect(() => {
+        const element = document.getElementById(message.id);
+        document.addEventListener("click", handleClick.bind(this, element));
+
+        return () => {
+            document.removeEventListener("click", handleClick.bind(this, element));
+            clearTimeout(timer);
+        };
+    }, []);
+
     return (
         <div className={classNames('message', {'message--isme': (message.senderId === idAuth)})}>
-            <div className='message__bubble'>
+            <div className={classNames('message__bubble', {'focus': (visible)})}>
                 <div className='text'>
                     {message.text && message.text}
                 </div>
                 <div className='date'>
                     <span>
                         {format(Date.parse(message.addedAt), 'HH:mm dd.MM.yyyy')}
-                      {/*  {message.addedAt}*/}
                     </span>
                 </div>
+                <Popover
+                    placement="bottomRight"
+                    content={
+                        <>
+                            <div className='item-popover' onClick={onDelMessage}>
+                                Удалить сообщение
+                            </div>
+                        </>
+                    }
+                    trigger="focus">
+                    <div className='message-btn' id={message.id} onClick={toogleVisible}>
+                        <button><EllipsisOutlined style={{fontSize: '24px', color: 'rgb(147, 149, 150)'}}/></button>
+                    </div>
+                </Popover>
             </div>
         </div>
     );
