@@ -1,15 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import './App.scss';
 import {MessagesContainer} from './containers';
 import {DialogsContainer} from './containers';
+import {ProfileContainer} from './containers';
 
 function App() {
+  const [profile, setProfile] = useState(false);
   return (
     <>
         <div className='chat'>
         <div className='chat__dialogs'>
-            <DialogsContainer/>
+            {(!profile) ? <DialogsContainer setProfile={setProfile} /> : <ProfileContainer setProfile={setProfile}/>}
         </div>
         <div className='chat__messages'>
             <MessagesContainer/>

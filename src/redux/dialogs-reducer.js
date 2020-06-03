@@ -4,13 +4,14 @@ import {openNotification} from "../helpers/notifications";
 const SET_DIALOGS = 'dialogs/SET_DIALOGS';
 const SET_MESSAGES = 'dialogs/SET_MESSAGES';
 const SET_CURRENT_DIALOG = 'dialogs/SET_CURRENT_DIALOG';
+const SET_USER_FULLNAME = 'dialogs/SET_USER_FULLNAME';
 
 let initialState = {
     dialogs: [],
     messages: [],
     idAuth: 'e715df23-ecb8-47ad-8ad5-dd4c3c7d7f1j',
-    currentDialog: null
-
+    currentDialog: null,
+    userFullname: 'Антон'
 };
 
 const dialogsReducer = (state = initialState, action) => {
@@ -29,6 +30,11 @@ const dialogsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 currentDialog: action.payload
+            };
+        case SET_USER_FULLNAME:
+            return {
+                ...state,
+                userFullname: action.payload
             };
         default:
             return state;
@@ -55,6 +61,13 @@ const setCurrentDialog = (id) => {
     return {
         type: SET_CURRENT_DIALOG,
         payload: id
+    };
+};
+
+export const setUserFullname = (fullname) => {
+    return {
+        type: SET_USER_FULLNAME,
+        payload: fullname
     };
 };
 
