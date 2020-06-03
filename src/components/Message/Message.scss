@@ -12,11 +12,18 @@
     padding: 15px 7px 3px 7px;
     margin-bottom: 8px;
     position: relative;
+    max-width: 600px;
     .date {
       display: flex;
       justify-content: flex-end;
       font-size: 10px;
       opacity: 0.5;
+    }
+    .text {
+      word-wrap: break-word;
+      -webkit-hyphens: auto;
+      -moz-hyphens: auto;
+      -ms-hyphens: auto;
     }
     .message-btn {
       display: none;
