@@ -33,7 +33,8 @@ const Message = ({message, idAuth, currentDialog, delMessageAC}) => {
     }, []);
 
     return (
-        <div className={classNames('message', {'message--isme': (message.senderId === idAuth)})}>
+        <div className={classNames('message', {'message--isme': (message.senderId === idAuth),
+            'message--notme': (message.senderId !== idAuth)})}>
             <div className={classNames('message__bubble', {'focus': (visible)})}>
                 <div className='text'>
                     {message.text && message.text}

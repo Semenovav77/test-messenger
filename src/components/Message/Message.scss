@@ -41,11 +41,14 @@
   &--isme {
     display: flex;
     flex-direction: row-reverse;
+    padding-left: 100px;
     #{$self}__bubble {
       background: #dcf8c6;
       border-radius: 10px 0px 10px 10px;
     }
-
+  }
+  &--notme {
+   padding-right: 100px;
   }
 }
 .focus {

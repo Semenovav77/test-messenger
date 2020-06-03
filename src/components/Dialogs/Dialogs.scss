@@ -4,6 +4,12 @@
     height: 59px;
     background: #EDEDED;
     border: 1px solid #282c3417;
+    padding-left: 12px;
+    padding-top: 8px;
+    svg {
+      width: 44px;
+      height: 44px;
+    }
   }
   &__search{
     height: 49px;

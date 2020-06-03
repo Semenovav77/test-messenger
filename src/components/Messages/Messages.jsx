@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import './Messages.scss';
 import {Message} from "./../../components";
@@ -12,6 +12,12 @@ const Messages = ({messages, dialogs, idAuth, currentDialog, addMessagesAC, delD
         if (target === '\n') {target = ''}
         setValue(target);
     };
+    const messagesRef = useRef(null);
+    useEffect(() => {
+        if (messagesRef.current) {
+            messagesRef.current.scrollTo(0, 9999)
+        }
+    },[messages]);
 
     return (
         <div className='messages'>
@@ -21,7 +27,7 @@ const Messages = ({messages, dialogs, idAuth, currentDialog, addMessagesAC, delD
                                                                                               delDialogAC={delDialogAC}
                                                                                               />)}
             </div>
-            <div className='messages__current-dialog'>
+            <div className='messages__current-dialog' ref={messagesRef}>
                 {messages.map((message) => <Message key={message.id}
                                                     message={message}
                                                     idAuth={idAuth}
