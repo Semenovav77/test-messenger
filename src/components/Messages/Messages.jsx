@@ -4,13 +4,13 @@ import './Messages.scss';
 import {Message} from "./../../components";
 import {Input} from './../../components';
 import {HeaderCurrentContact} from './../../components';
+import orderBy from "lodash/orderBy";
 
 const Messages = ({messages, dialogs, idAuth, currentDialog, addMessagesAC, delDialogAC, delMessageAC}) => {
     const [value, setValue] = useState('');
     const onChangeInput = (e) => {
-        let target = e.target.innerText;
-        if (target === '\n') {target = ''}
-        setValue(target);
+        if (e.target.innerText === '\n') {e.target.innerText=''}
+        setValue(e.target.innerText);
     };
     const messagesRef = useRef(null);
     useEffect(() => {
@@ -18,6 +18,14 @@ const Messages = ({messages, dialogs, idAuth, currentDialog, addMessagesAC, delD
             messagesRef.current.scrollTo(0, 9999)
         }
     },[messages]);
+
+    if (!currentDialog) {
+        return (
+            <div style={{backgroundColor: '#EDEDED', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <h4>Выберите диалог</h4>
+            </div>
+        )
+    }
 
     return (
         <div className='messages'>
@@ -28,7 +36,7 @@ const Messages = ({messages, dialogs, idAuth, currentDialog, addMessagesAC, delD
                                                                                               />)}
             </div>
             <div className='messages__current-dialog' ref={messagesRef}>
-                {messages.map((message) => <Message key={message.id}
+                { (orderBy(messages, ["addedAt"], ["asc"])).map((message) => <Message key={message.id}
                                                     message={message}
                                                     idAuth={idAuth}
                                                     currentDialog={currentDialog}

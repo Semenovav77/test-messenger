@@ -4,26 +4,27 @@ import orderBy from 'lodash/orderBy'
 import './Dialogs.scss';
 import {Dialog} from './../../components';
 import {Input} from './../../components';
+import {Preloader} from './../../components';
 
-const Dialogs = ({dialogs, currentDialog, getDialogsAC, getMessagesAC, setProfile}) => {
-
+const Dialogs = ({dialogs, currentDialog, getDialogsAC, getMessagesAC, setProfile, isFetchingDialogs}) => {
+    debugger
     const [value, setValue] = useState('');
+
     const [dialogsFiltred, setDialogsFiltred] = useState(Array.from(dialogs));
+
     const onChangeInput = (e) => {
-        let target = e.target.innerText;
-        if (target === '\n') {
-            target = '';
-        }
-        setDialogsFiltred(dialogs.filter(el => el.userName.toLowerCase().indexOf(target.toLowerCase()) >= 0));
-        setValue(target);
+        if (e.target.innerText === '\n') {e.target.innerText=''}
+        setDialogsFiltred(dialogs.filter(el => el.userName.toLowerCase().indexOf(e.target.innerText.toLowerCase()) >= 0));
+        setValue(e.target.innerText);
     };
+
     useEffect(() => {
         getDialogsAC();
     }, []);
+
     useEffect(() => {
         setDialogsFiltred(dialogs);
     }, [dialogs]);
-
     return (
         <div className='dialogs'>
             <div className='dialogs__header'>
@@ -44,11 +45,11 @@ const Dialogs = ({dialogs, currentDialog, getDialogsAC, getMessagesAC, setProfil
                        onChangeInput={onChangeInput}/>
             </div>
             <div className='dialogs__list'>
-                {(orderBy(dialogsFiltred, ["lastMessageDate"], ["desc"])).map((dialog) => <Dialog key={dialog.id}
-                                                                                                  dialog={dialog}
-                                                                                                  getMessagesAC={getMessagesAC}
-                                                                                                  currentDialog={currentDialog}
-                />)}
+                {(!isFetchingDialogs) ? (orderBy(dialogsFiltred, ["lastMessageDate"], ["desc"])).map((dialog) => <Dialog key={dialog.id}
+                                                                                                                          dialog={dialog}
+                                                                                                                          getMessagesAC={getMessagesAC}
+                                                                                                                          currentDialog={currentDialog}
+                />) : <Preloader />}
             </div>
         </div>
     )

@@ -7,7 +7,8 @@ import {getDialogsAC, getMessagesAC} from "../redux/dialogs-reducer";
 
 const mapStateToProps = (state) => ({
     dialogs: state.dialogsPage.dialogs,
-    currentDialog:state.dialogsPage.currentDialog
+    currentDialog:state.dialogsPage.currentDialog,
+    isFetchingDialogs:state.dialogsPage.isFetchingDialogs
 });
 
 export default connect(mapStateToProps, {getDialogsAC, getMessagesAC})(Dialogs);

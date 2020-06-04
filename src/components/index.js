@@ -6,3 +6,4 @@ export {default as Input} from './Input/Input';
 export {default as HeaderCurrentContact} from './HeaderCurrentContact/HeaderCurrentContact';
 export {default as Profile} from './Profile/Profile';
 export {default as InputContact} from './InputContact/InputContact';
+export {default as Preloader} from './Preloader/Preloader';

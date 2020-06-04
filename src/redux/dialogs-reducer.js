@@ -5,13 +5,15 @@ const SET_DIALOGS = 'dialogs/SET_DIALOGS';
 const SET_MESSAGES = 'dialogs/SET_MESSAGES';
 const SET_CURRENT_DIALOG = 'dialogs/SET_CURRENT_DIALOG';
 const SET_USER_FULLNAME = 'dialogs/SET_USER_FULLNAME';
+const SET_ISFETCHING_DIALOGS = 'dialogs/SET_ISFETCHING_DIALOGS';
 
 let initialState = {
     dialogs: [],
     messages: [],
     idAuth: 'e715df23-ecb8-47ad-8ad5-dd4c3c7d7f1j',
     currentDialog: null,
-    userFullname: 'Антон'
+    userFullname: 'Антон',
+    isFetchingDialogs: false
 };
 
 const dialogsReducer = (state = initialState, action) => {
@@ -35,6 +37,11 @@ const dialogsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userFullname: action.payload
+            };
+        case SET_ISFETCHING_DIALOGS:
+            return {
+                ...state,
+                isFetchingDialogs: action.payload
             };
         default:
             return state;
@@ -71,10 +78,19 @@ export const setUserFullname = (fullname) => {
     };
 };
 
+export const setIsFetchingDialogs = (isFetching) => {
+    return {
+        type: SET_ISFETCHING_DIALOGS,
+        payload: isFetching
+    };
+};
+
 export const getDialogsAC = () => {
     return (dispatch) => {
+        dispatch(setIsFetchingDialogs(true));
         dialogsAPI.getDialogs().then(data => {
-            dispatch(setDialogs(data.data))
+            dispatch(setDialogs(data.data));
+            dispatch(setIsFetchingDialogs(false));
         })
             .catch(err => {
                 openNotification({
@@ -90,7 +106,7 @@ export const getMessagesAC = (dialogId) => {
     return (dispatch) => {
         dispatch(setCurrentDialog(dialogId));
         dialogsAPI.getMessages(dialogId).then(data => {
-            dispatch(setMessages(data.data))
+            dispatch(setMessages(data.data));
         })
             .catch(err => {
                 openNotification({
@@ -105,7 +121,7 @@ export const getMessagesAC = (dialogId) => {
 export const addMessagesAC = (text, senderId, dialogId) => {
     return (dispatch) => {
         dialogsAPI.addMessage(text, senderId, dialogId).then(data => {
-            dispatch(getMessagesAC(dialogId))
+            dispatch(getMessagesAC(dialogId));
         })
             .catch(err => {
                 openNotification({
@@ -121,8 +137,8 @@ export const delDialogAC = (id) => {
     return (dispatch) => {
         dialogsAPI.delDialog(id)
             .then(data => {
-                dispatch(getDialogsAC())
-                dispatch(setMessages([]))
+                dispatch(getDialogsAC());
+                dispatch(setMessages([]));
         })
             .catch(err => {
                 openNotification({

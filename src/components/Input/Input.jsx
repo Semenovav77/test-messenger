@@ -8,8 +8,8 @@ const Input = ({idAuth, currentDialog, addMessagesAC, placeholder, message = fal
 
     const sendMessage = () => {
         if (currentDialog && value) addMessagesAC(value, idAuth, currentDialog);
-        setValue('');
         cellRef.current.textContent = '';
+        setValue(cellRef.current.textContent);
     };
 
     const cellRef = useRef(null);
@@ -18,8 +18,8 @@ const Input = ({idAuth, currentDialog, addMessagesAC, placeholder, message = fal
         if ((e.key === 'Enter') && (message)) {
             e.preventDefault();
             if (currentDialog && value) addMessagesAC(value, idAuth, currentDialog);
-            setValue('');
             cellRef.current.textContent = '';
+            setValue(cellRef.current.textContent);
         }
     };
 
@@ -33,7 +33,7 @@ const Input = ({idAuth, currentDialog, addMessagesAC, placeholder, message = fal
             </div>}
             <div className={classNames('input-add', {'search': (!message)})}
                  contentEditable={true} suppressContentEditableWarning
-                 value={value} onInput={onChangeInput}
+                 onInput={onChangeInput}
                  ref={cellRef}
                  onKeyPress={sendMessageOnKey}>
             </div>
