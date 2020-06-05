@@ -5,6 +5,7 @@ import './Message.scss';
 import {format} from "date-fns";
 import {EllipsisOutlined} from '@ant-design/icons'
 import {Popover} from "antd";
+import reactStringReplace from "react-string-replace";
 
 const Message = ({message, idAuth, currentDialog, delMessageAC}) => {
 
@@ -18,7 +19,7 @@ const Message = ({message, idAuth, currentDialog, delMessageAC}) => {
     let timer;
     const handleClick = (element, e) => {
         if (element && !element.contains(e.target)) {
-           timer = setTimeout(() => setVisible(false), 150)
+           timer = setTimeout(() => setVisible(false), 200)
         }
     };
 
@@ -37,7 +38,12 @@ const Message = ({message, idAuth, currentDialog, delMessageAC}) => {
             'message--notme': (message.senderId !== idAuth)})}>
             <div className={classNames('message__bubble', {'focus': (visible)})}>
                 <div className='text'>
-                    {message.text && message.text}
+                    {message.text && <p> {reactStringReplace(message.text, /<img class="emoji emoji-sizer" (.+?)>/g, (match, i) => (
+                        reactStringReplace(match, /src="(.+?)"/g,(matchi,i) => (
+                            <img key={i} className="emoji emoji-sizer" src={`${matchi}`} />
+                        ))
+
+                    ))} </p>}
                 </div>
                 <div className='date'>
                     <span>

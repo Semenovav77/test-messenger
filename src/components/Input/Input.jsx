@@ -38,12 +38,13 @@ const Input = ({idAuth, currentDialog, addMessagesAC, placeholder, message = fal
     };
 
     const handleClick = (n) => {
-        cellRef.current.focus();
+       /* cellRef.current.focus();*/
         const emoji = jsemoji
             .replace_colons(n.colons)
             .replace("span", "img")
             .slice(0, -7)
             .replace('style="background-image:url(', 'src="')
+            .replace(/ data-codepoints="(.+?)"/g, '/')
             .replace(')"', '"');
         cellRef.current.innerHTML = cellRef.current.innerHTML + emoji;
         setValue(cellRef.current.innerHTML);
