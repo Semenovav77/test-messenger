@@ -12,7 +12,6 @@ let jsemoji = new EmojiConvertor();
 jsemoji.img_set = 'facebook';
 jsemoji.img_sets.facebook.path = 'https://cdn.jsdelivr.net/emojione/assets/4.5/png/32/';
 jsemoji.allow_native = false;
-console.log(jsemoji);
 
 type Props = {
     idAuth?: string,
@@ -35,7 +34,11 @@ const Input: React.FC<Props> = ({idAuth, currentDialog, placeholder, message = f
 
     const sendMessage = () => {
         if (addMessagesAC && idAuth && setValue) {
-            if (currentDialog && value) addMessagesAC(value, idAuth, currentDialog);
+            if (currentDialog && value) {
+                let str = value;
+                let newstr = str.replace(/&nbsp;/gi, ' ');
+                addMessagesAC(newstr, idAuth, currentDialog);
+            }
             if (cellRef.current !== null) {
                 cellRef.current.textContent = '';
                 setValue(cellRef.current.textContent);

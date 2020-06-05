@@ -54,7 +54,7 @@ const Message: React.FC<Props> = ({message, idAuth, currentDialog, delMessageAC}
                 <div className='text'>
                     {message.text && <p> {reactStringReplace(message.text, /<img class="emoji emoji-sizer" (.+?)>/g, (match, i) => (
                         reactStringReplace(match, /src="(.+?)"/g,(matchi,i) => (
-                            <img key={i} className="emoji emoji-sizer" src={`${matchi}`} />
+                            <img key={i} className="emoji emoji-sizer" src={`${matchi}`} alt='img' />
                         ))
 
                     ))} </p>}

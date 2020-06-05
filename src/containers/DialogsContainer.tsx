@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {Dialogs} from '../components';
 import {connect} from 'react-redux';
 import {getDialogsAC, getMessagesAC} from "../redux/dialogs-reducer";
@@ -17,7 +15,9 @@ type MapDispatchPropTypes = {
     getMessagesAC: (dialogId: string) => void
 };
 
-type OwnPropTypes = {}
+type OwnPropTypes = {
+    setProfile: (profile: boolean) => void
+}
 
 const mapStateToProps = (state:AppStateType): MapStatePropType => ({
     dialogs: state.dialogsPage.dialogs,

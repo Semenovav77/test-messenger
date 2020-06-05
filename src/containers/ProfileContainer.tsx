@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {Profile} from '../components';
 import {connect} from 'react-redux';
 import {setUserFullname} from '../redux/dialogs-reducer';
@@ -13,7 +11,9 @@ type MapDispatchPropTypes = {
     setUserFullname: (fullname: string) => void
 };
 
-type OwnPropTypes = {}
+type OwnPropTypes = {
+    setProfile: (profile: boolean) => void
+}
 
 
 const mapStateToProps = (state: AppStateType): MapStatePropType => ({
