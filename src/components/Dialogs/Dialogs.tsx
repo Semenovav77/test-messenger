@@ -1,18 +1,28 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import orderBy from 'lodash/orderBy'
 
 import './Dialogs.scss';
-import {Dialog} from './../../components';
-import {Input} from './../../components';
-import {Preloader} from './../../components';
+import {Dialog} from '../index';
+import {Input} from '../index';
+import {Preloader} from '../index';
+import {DialogType} from "../types/types";
 
-const Dialogs = ({dialogs, currentDialog, getDialogsAC, getMessagesAC, setProfile, isFetchingDialogs}) => {
+type Props = {
+    dialogs: Array<DialogType>,
+    currentDialog: string | null,
+    isFetchingDialogs: boolean,
+    getDialogsAC: () => void,
+    getMessagesAC: (dialogId: string) => void,
+    setProfile: (profile: boolean) => void
+}
 
-    const [value, setValue] = useState('');
+const Dialogs: React.FC<Props> = ({dialogs, currentDialog, isFetchingDialogs, getDialogsAC, getMessagesAC, setProfile}) => {
 
-    const [dialogsFiltred, setDialogsFiltred] = useState(Array.from(dialogs));
+    const [value, setValue] = useState<string>('');
 
-    const onChangeInput = (e) => {
+    const [dialogsFiltred, setDialogsFiltred] = useState<Array<DialogType>>(Array.from(dialogs));
+
+    const onChangeInput = (e: React.ChangeEvent<HTMLDivElement>) => {
         if (e.target.innerText === '\n') {e.target.innerText=''}
         setDialogsFiltred(dialogs.filter(el => el.userName.toLowerCase().indexOf(e.target.innerText.toLowerCase()) >= 0));
         setValue(e.target.innerText);
@@ -25,6 +35,7 @@ const Dialogs = ({dialogs, currentDialog, getDialogsAC, getMessagesAC, setProfil
     useEffect(() => {
         setDialogsFiltred(dialogs);
     }, [dialogs]);
+
     return (
         <div className='dialogs'>
             <div className='dialogs__header'>
@@ -42,6 +53,7 @@ const Dialogs = ({dialogs, currentDialog, getDialogsAC, getMessagesAC, setProfil
                 <Input placeholder={"Поиск"}
                        value={value}
                        setValue={setValue}
+                       message={false}
                        onChangeInput={onChangeInput}/>
             </div>
             <div className='dialogs__list'>

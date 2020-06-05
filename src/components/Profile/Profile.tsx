@@ -2,13 +2,22 @@ import React, {useState} from 'react';
 
 import './Profile.scss'
 import {ArrowLeftOutlined, EditOutlined} from "@ant-design/icons";
-import {InputContact} from "../../components";
+import {InputContact} from "../index";
 
-const Profile = ({setProfile, userFullname, setUserFullname}) => {
-    const [toogleEdit, setToogleEdit] = useState(false);
+type Props = {
+    userFullname: string,
+    setUserFullname: (fullname: string) => void,
+    setProfile: (profile: boolean) => void
+}
+
+const Profile: React.FC<Props> = ({userFullname, setUserFullname, setProfile}) => {
+
+    const [toogleEdit, setToogleEdit] = useState<boolean>(false);
+
     const onToogle = () => {
         setToogleEdit(!toogleEdit)
     };
+
     return (
         <div className='profile'>
             <div className='profile__header'>

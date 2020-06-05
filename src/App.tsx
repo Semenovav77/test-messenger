@@ -6,7 +6,7 @@ import {DialogsContainer} from './containers';
 import {ProfileContainer} from './containers';
 
 function App() {
-  const [profile, setProfile] = useState(false);
+  const [profile, setProfile] = useState<boolean>(false);
   return (
     <>
         <div className='chat'>

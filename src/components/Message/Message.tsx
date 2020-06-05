@@ -2,22 +2,34 @@ import React, {useState, useEffect} from 'react';
 import classNames from 'classnames';
 
 import './Message.scss';
-import {format} from "date-fns";
+import {format} from 'date-fns';
 import {EllipsisOutlined} from '@ant-design/icons'
-import {Popover} from "antd";
-import reactStringReplace from "react-string-replace";
+import {Popover} from 'antd';
+import reactStringReplace from 'react-string-replace';
+import {MessageType} from "../types/types";
 
-const Message = ({message, idAuth, currentDialog, delMessageAC}) => {
+type Props = {
+    message: MessageType,
+    idAuth: string,
+    currentDialog: string ,
+    delMessageAC: (id: string, dialogId: string) => void
+}
 
-    const [visible, setVisible] = useState(false);
+const Message: React.FC<Props> = ({message, idAuth, currentDialog, delMessageAC}) => {
+
+    const [visible, setVisible] = useState<boolean>(false);
+
     const toogleVisible = () => {
         setVisible(true);
     };
+
     const onDelMessage = () => {
         delMessageAC(message.id, currentDialog)
     };
-    let timer;
-    const handleClick = (element, e) => {
+
+    let timer: ReturnType<typeof setTimeout>;
+
+    const handleClick = (element: any, e: any) => {
         if (element && !element.contains(e.target)) {
            timer = setTimeout(() => setVisible(false), 200)
         }
@@ -25,9 +37,11 @@ const Message = ({message, idAuth, currentDialog, delMessageAC}) => {
 
     useEffect(() => {
         const element = document.getElementById(message.id);
+        //@ts-ignore
         document.addEventListener("click", handleClick.bind(this, element));
 
         return () => {
+            //@ts-ignore
             document.removeEventListener("click", handleClick.bind(this, element));
             clearTimeout(timer);
         };

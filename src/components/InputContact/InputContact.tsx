@@ -1,20 +1,31 @@
 import React, {useState, useEffect} from 'react';
 
-import {SaveOutlined} from "@ant-design/icons";
-import './InputContact.scss'
+import {SaveOutlined} from '@ant-design/icons';
+import './InputContact.scss';
 
-const InputContact = ({onToogle, userFullname, setUserFullname}) => {
-   const [valueInput, setValueInput] = useState('');
-   const onChangeInput = (e) => {
+type Props = {
+    onToogle: () => void,
+    userFullname: string,
+    setUserFullname: (fullname: string ) => void
+}
+
+const InputContact: React.FC<Props> = ({onToogle, userFullname, setUserFullname}) => {
+
+   const [valueInput, setValueInput] = useState<string>('');
+
+   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
        setValueInput(e.target.value)
    };
+
     useEffect(() => {
         setValueInput(userFullname);
     }, []);
+
     const onSendValue = () => {
         setUserFullname(valueInput);
         onToogle();
     };
+
     return (
         <div className='input-block'>
             <div className='input'>

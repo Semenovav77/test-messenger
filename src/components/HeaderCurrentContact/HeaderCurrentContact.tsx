@@ -3,8 +3,14 @@ import React from 'react';
 import {MoreOutlined} from '@ant-design/icons';
 import {Popover} from 'antd';
 import './HeaderCurrentContact.scss';
+import {DialogType} from "../types/types";
 
-const HeaderCurrentContact = ({dialog, delDialogAC}) => {
+type Props = {
+    dialog: DialogType,
+    delDialogAC: (id: string) => void
+}
+
+const HeaderCurrentContact: React.FC<Props> = ({dialog, delDialogAC}) => {
     return (
         <>
             <div className='left-panel'>
@@ -27,7 +33,6 @@ const HeaderCurrentContact = ({dialog, delDialogAC}) => {
                     <MoreOutlined style={{fontSize: '24px', color: 'rgb(147, 149, 150)'}}/>
                 </div>
             </Popover>
-
         </>
     );
 };

@@ -1,5 +1,9 @@
 import {dialogsAPI} from "../api/api";
 import {openNotification} from "../helpers/notifications";
+import {DialogType, MessageType} from "../components/types/types";
+import {Dispatch} from "redux";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";
 
 const SET_DIALOGS = 'dialogs/SET_DIALOGS';
 const SET_MESSAGES = 'dialogs/SET_MESSAGES';
@@ -7,7 +11,16 @@ const SET_CURRENT_DIALOG = 'dialogs/SET_CURRENT_DIALOG';
 const SET_USER_FULLNAME = 'dialogs/SET_USER_FULLNAME';
 const SET_ISFETCHING_DIALOGS = 'dialogs/SET_ISFETCHING_DIALOGS';
 
-let initialState = {
+type InitialStateType ={
+    dialogs: Array<DialogType>,
+    messages: Array<MessageType>,
+    idAuth: string,
+    currentDialog: string | null,
+    userFullname: string,
+    isFetchingDialogs: boolean
+}
+
+let initialState: InitialStateType = {
     dialogs: [],
     messages: [],
     idAuth: 'e715df23-ecb8-47ad-8ad5-dd4c3c7d7f1j',
@@ -16,7 +29,7 @@ let initialState = {
     isFetchingDialogs: false
 };
 
-const dialogsReducer = (state = initialState, action) => {
+const dialogsReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case  SET_DIALOGS:
             return {
@@ -50,43 +63,71 @@ const dialogsReducer = (state = initialState, action) => {
 
 export default dialogsReducer;
 
-const setDialogs = (dialogs) => {
+type ActionsType = setDialogsActionType | setMessagesActionType | setCurrentDialogActionType | setUserFullnameActionType | setIsFetchingDialogsActionType
+
+type setDialogsActionType = {
+    type: typeof SET_DIALOGS,
+    payload: Array<DialogType>
+
+}
+
+const setDialogs = (dialogs: Array<DialogType>): setDialogsActionType => {
     return {
         type: SET_DIALOGS,
         payload: dialogs
     };
 };
 
-const setMessages = (messages) => {
+type setMessagesActionType = {
+    type: typeof SET_MESSAGES,
+    payload: Array<MessageType>
+}
+
+const setMessages = (messages: Array<MessageType>): setMessagesActionType => {
     return {
         type: SET_MESSAGES,
         payload: messages
     };
 };
 
-const setCurrentDialog = (id) => {
+type setCurrentDialogActionType = {
+    type: typeof SET_CURRENT_DIALOG,
+    payload: string | null
+}
+
+const setCurrentDialog = (id: string | null): setCurrentDialogActionType => {
     return {
         type: SET_CURRENT_DIALOG,
         payload: id
     };
 };
 
-export const setUserFullname = (fullname) => {
+type setUserFullnameActionType = {
+    type: typeof SET_USER_FULLNAME,
+    payload: string
+}
+
+export const setUserFullname = (fullname: string): setUserFullnameActionType => {
     return {
         type: SET_USER_FULLNAME,
         payload: fullname
     };
 };
 
-export const setIsFetchingDialogs = (isFetching) => {
+type setIsFetchingDialogsActionType = {
+    type: typeof SET_ISFETCHING_DIALOGS,
+    payload: boolean
+}
+
+export const setIsFetchingDialogs = (isFetching: boolean): setIsFetchingDialogsActionType => {
     return {
         type: SET_ISFETCHING_DIALOGS,
         payload: isFetching
     };
 };
 
-export const getDialogsAC = () => {
-    return (dispatch) => {
+export const getDialogsAC = ():  ThunkAction<void, AppStateType, unknown, ActionsType> => {
+    return (dispatch: Dispatch<ActionsType>) => {
         dispatch(setIsFetchingDialogs(true));
         dialogsAPI.getDialogs().then(data => {
             dispatch(setDialogs(data.data));
@@ -102,8 +143,8 @@ export const getDialogsAC = () => {
     }
 };
 
-export const getMessagesAC = (dialogId) => {
-    return (dispatch) => {
+export const getMessagesAC = (dialogId: string):  ThunkAction<void, AppStateType, unknown, ActionsType> => {
+    return (dispatch: Dispatch<ActionsType>) => {
         dispatch(setCurrentDialog(dialogId));
         dialogsAPI.getMessages(dialogId).then(data => {
             dispatch(setMessages(data.data));
@@ -118,7 +159,7 @@ export const getMessagesAC = (dialogId) => {
     }
 };
 
-export const addMessagesAC = (text, senderId, dialogId) => {
+export const addMessagesAC = (text: string, senderId: string, dialogId: string):  ThunkAction<void, AppStateType, unknown, ActionsType> => {
     return (dispatch) => {
         dialogsAPI.addMessage(text, senderId, dialogId).then(data => {
             dispatch(getMessagesAC(dialogId));
@@ -133,12 +174,13 @@ export const addMessagesAC = (text, senderId, dialogId) => {
     }
 };
 
-export const delDialogAC = (id) => {
+export const delDialogAC = (id: string):  ThunkAction<void, AppStateType, unknown, ActionsType> => {
     return (dispatch) => {
         dialogsAPI.delDialog(id)
             .then(data => {
                 dispatch(getDialogsAC());
                 dispatch(setMessages([]));
+                dispatch(setCurrentDialog(null));
         })
             .catch(err => {
                 openNotification({
@@ -150,7 +192,7 @@ export const delDialogAC = (id) => {
     }
 };
 
-export const delMessageAC = (id, dialogId) => {
+export const delMessageAC = (id: string, dialogId: string): ThunkAction<void, AppStateType, unknown, ActionsType> => {
     return (dispatch) => {
         dialogsAPI.delMessage(id)
             .then(data => {

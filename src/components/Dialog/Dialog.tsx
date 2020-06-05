@@ -3,8 +3,15 @@ import classNames from 'classnames';
 
 import './Dialog.scss';
 import { format } from 'date-fns';
+import {DialogType} from "../types/types";
 
-const Dialog = ({dialog, currentDialog, getMessagesAC}) => {
+type Props = {
+    dialog: DialogType,
+    currentDialog: string | null,
+    getMessagesAC: (dialogId: string) => void
+}
+
+const Dialog: React.FC<Props> = ({dialog, currentDialog, getMessagesAC}) => {
     return (
         <div className={classNames('item', {'item--iscurrent': (dialog.id === currentDialog)})} onClick={() => getMessagesAC(dialog.id)}>
             <div className='item__left'>
