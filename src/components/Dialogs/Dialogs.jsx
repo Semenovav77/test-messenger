@@ -7,7 +7,7 @@ import {Input} from './../../components';
 import {Preloader} from './../../components';
 
 const Dialogs = ({dialogs, currentDialog, getDialogsAC, getMessagesAC, setProfile, isFetchingDialogs}) => {
-    debugger
+
     const [value, setValue] = useState('');
 
     const [dialogsFiltred, setDialogsFiltred] = useState(Array.from(dialogs));

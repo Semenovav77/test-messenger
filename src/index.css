@@ -19,3 +19,12 @@ code {
 * {
   outline:none;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb {
+  width: 8px;
+  background-color: #8a8a8ac2;
+}

@@ -1,15 +1,31 @@
-import React, {useState, useRef} from 'react';
+import React, {useRef, useState} from 'react';
+import 'emoji-mart/css/emoji-mart.css'
 
-import {SmileOutlined, CheckCircleOutlined, SearchOutlined} from '@ant-design/icons';
+import {SmileOutlined, CheckCircleOutlined, SearchOutlined, CloseOutlined} from '@ant-design/icons';
 import './Input.scss'
 import classNames from "classnames";
+import {Picker} from 'emoji-mart';
+import EmojiConvertor from "emoji-js";
+
+let jsemoji = new EmojiConvertor();
+jsemoji.img_set = 'facebook';
+jsemoji.img_sets.facebook.path = 'https://cdn.jsdelivr.net/emojione/assets/4.5/png/32/';
+jsemoji.allow_native = false;
+console.log(jsemoji);
 
 const Input = ({idAuth, currentDialog, addMessagesAC, placeholder, message = false, value, setValue, onChangeInput}) => {
+
+    const [emojiVisible, setVisibleEmoji] = useState(false);
+
+    const toogleEmoji = () => {
+        setVisibleEmoji(!emojiVisible);
+    };
 
     const sendMessage = () => {
         if (currentDialog && value) addMessagesAC(value, idAuth, currentDialog);
         cellRef.current.textContent = '';
         setValue(cellRef.current.textContent);
+        setVisibleEmoji(false);
     };
 
     const cellRef = useRef(null);
@@ -17,16 +33,33 @@ const Input = ({idAuth, currentDialog, addMessagesAC, placeholder, message = fal
     const sendMessageOnKey = (e) => {
         if ((e.key === 'Enter') && (message)) {
             e.preventDefault();
-            if (currentDialog && value) addMessagesAC(value, idAuth, currentDialog);
-            cellRef.current.textContent = '';
-            setValue(cellRef.current.textContent);
+            sendMessage();
         }
+    };
+
+    const handleClick = (n) => {
+        cellRef.current.focus();
+        const emoji = jsemoji
+            .replace_colons(n.colons)
+            .replace("span", "img")
+            .slice(0, -7)
+            .replace('style="background-image:url(', 'src="')
+            .replace(')"', '"');
+        cellRef.current.innerHTML = cellRef.current.innerHTML + emoji;
+        setValue(cellRef.current.innerHTML);
     };
 
     return (
         <div className='messages-search__input'>
             {(message) && <div className='left-icon'>
-                <SmileOutlined style={{fontSize: '30px', color: 'rgb(147, 149, 150)'}}/>
+                {(emojiVisible) &&
+                <>
+                    <CloseOutlined onClick={toogleEmoji} style={{fontSize: '22px', color: 'rgb(147, 149, 150)'}}/>
+                    <div className="emoji-picker">
+                        <Picker set='facebook' onSelect={handleClick}/>
+                    </div>
+                </>}
+                <SmileOutlined onClick={toogleEmoji} style={{fontSize: '30px', color: 'rgb(147, 149, 150)'}}/>
             </div>}
             {(!message) && <div className='search-icon'>
                 <SearchOutlined style={{fontSize: '20px', color: 'rgb(147, 149, 150)'}}/>
@@ -35,10 +68,11 @@ const Input = ({idAuth, currentDialog, addMessagesAC, placeholder, message = fal
                  contentEditable={true} suppressContentEditableWarning
                  onInput={onChangeInput}
                  ref={cellRef}
-                 onKeyPress={sendMessageOnKey}>
+                 onKeyPress={sendMessageOnKey}
+                 >
             </div>
-            {(value === '' || value ==='\n') &&
-            <div className='input-placeholder'>
+            {(value === '') &&
+            <div className={classNames('input-placeholder', {'emoji-open': (emojiVisible)})}>
                 {placeholder}
             </div>}
             {(message) && <div className='right-icon'>

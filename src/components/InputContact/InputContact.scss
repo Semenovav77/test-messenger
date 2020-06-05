@@ -2,6 +2,11 @@
     display: flex;
     .input {
         flex: 1;
+        input {
+            width: 90%;
+            border: none;
+            border-bottom: 2px solid #00BFA5;
+        }
     }
     .input-btn{
     }

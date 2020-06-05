@@ -9,13 +9,14 @@ import orderBy from "lodash/orderBy";
 const Messages = ({messages, dialogs, idAuth, currentDialog, addMessagesAC, delDialogAC, delMessageAC}) => {
     const [value, setValue] = useState('');
     const onChangeInput = (e) => {
-        if (e.target.innerText === '\n') {e.target.innerText=''}
-        setValue(e.target.innerText);
+        if (e.target.innerText === '\n') {e.target.innerHTML=''}
+        setValue(e.target.innerHTML);
     };
     const messagesRef = useRef(null);
     useEffect(() => {
         if (messagesRef.current) {
-            messagesRef.current.scrollTo(0, 9999)
+            const block = document.getElementById("block-messages");
+            block.scrollTop = block.scrollHeight;
         }
     },[messages]);
 
@@ -35,7 +36,7 @@ const Messages = ({messages, dialogs, idAuth, currentDialog, addMessagesAC, delD
                                                                                               delDialogAC={delDialogAC}
                                                                                               />)}
             </div>
-            <div className='messages__current-dialog' ref={messagesRef}>
+            <div className='messages__current-dialog' id='block-messages' ref={messagesRef}>
                 { (orderBy(messages, ["addedAt"], ["asc"])).map((message) => <Message key={message.id}
                                                     message={message}
                                                     idAuth={idAuth}
